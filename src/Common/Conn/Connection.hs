@@ -37,27 +37,27 @@ rawRow row = [liftMySQLType x | x <- row ]
 
 
 liftMySQLType x = case x of
-	SqlString x -> show x
-	SqlByteString x -> show x
-	SqlWord32 x -> show x
-	SqlWord64 x -> show x
-	SqlInt32 x -> show x
-	SqlInt64 x -> show x
-	SqlInteger x -> show x
-	SqlChar x -> show x
-	SqlBool x -> show x
-	SqlDouble x -> show x
-	SqlRational x -> show x
-	SqlLocalDate x -> show x
-	SqlLocalTimeOfDay x -> show x
-	SqlZonedLocalTimeOfDay x y -> ""
-	SqlLocalTime x -> show x
-	SqlZonedTime x -> show x
-	SqlUTCTime x -> show x
-	SqlDiffTime x -> show x
-	SqlPOSIXTime x -> show x
-	SqlEpochTime x -> show x
-	SqlTimeDiff x -> show x
-	SqlNull -> show "NULL"
+	SqlString x -> ("String",show x)
+	SqlByteString x -> ("ByteString",show x)
+	SqlWord32 x -> ("Word32",show x)
+	SqlWord64 x -> ("Word64",show x)
+	SqlInt32 x -> ("Int32",show x)
+	SqlInt64 x -> ("Int64",show x)
+	SqlInteger x -> ("Integer",show x)
+	SqlChar x -> ("Char",show x)
+	SqlBool x -> ("Bool",show x)
+	SqlDouble x -> ("Double",show x)
+	SqlRational x -> ("Rational",show x)
+	SqlLocalDate x -> ("LocalDate",show x)
+	SqlLocalTimeOfDay x -> ("LocalTimeOfDay",show x)
+	SqlZonedLocalTimeOfDay x y -> ("ZonedLocalTimeOfDay"++(show y),show x)
+	SqlLocalTime x -> ("LocalTime",show x)
+	SqlZonedTime x -> ("ZonedTime",show x)
+	SqlUTCTime x -> ("UTCTime",show x)
+	SqlDiffTime x -> ("DiffTime",show x)
+	SqlPOSIXTime x -> ("PosixTime",show x)
+	SqlEpochTime x -> ("EpochTime",show x)
+	SqlTimeDiff x -> ("TimeDiff",show x)
+	SqlNull -> ("Null","NULL")
 
 	

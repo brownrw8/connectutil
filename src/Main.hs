@@ -11,17 +11,17 @@ main = do
 	if ((==1) . length) args
 		then do
 			(action . (!!0)) args
-			loop []
+			loop
 		else do	
-			loop []
+			loop
 		
 
 action query = do
 	result <- (Conn.query . Util.escapeQuery) query
-	defaultDisplay $ stripQuotes result
+	defaultDisplay result
 
 
-loop h = do
+loop = do
 	putStr "\n>>> "
 	IO.hFlush IO.stdout
 	query <- getLine
@@ -30,26 +30,15 @@ loop h = do
 		"Q"			-> return ()
 		"quit"  	-> return ()
 		"QUIT"		-> return ()
-		":1"		-> do 
-			let hist = reverse $ h !!0
-			action hist
-			loop (hist:h)
-		":2"		-> do
-			let hist = reverse $ h !!1
-			action hist
-			loop (hist:h)
-		":3"		-> do 
-			let hist = reverse $ h !!2
-			action hist
-			loop (hist:h)
 		query		-> do
 			action query
-			loop (query:h)
+			loop
 			
-			
-stripQuotes result = map apply result
-	where apply r = [filterChars x | x <- r]
-		where filterChars r = [x | x <- r, x /= '"']
 
 		
-defaultDisplay result = mapM_ (putStrLn . show) result
+defaultDisplay result = mapM_ (putStrLn . show . display) result
+display [] = []
+display (x:[]) = (\(a,b) -> (a++"::"++(stripQuotes b))) x : []
+display (x:xs) = (\(a,b) -> (a++"::"++(stripQuotes b))) x : display (tail xs) 
+
+stripQuotes s = [x | x <- s, x /= '"']
