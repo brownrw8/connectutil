@@ -11,7 +11,6 @@ main = do
 	if ((==1) . length) args
 		then do
 			(action . (!!0)) args
-			loop
 		else do	
 			loop
 		
@@ -39,6 +38,6 @@ loop = do
 defaultDisplay result = mapM_ (putStrLn . show . display) result
 display [] = []
 display (x:[]) = (\(a,b) -> (a++"::"++(stripQuotes b))) x : []
-display (x:xs) = (\(a,b) -> (a++"::"++(stripQuotes b))) x : display (tail xs) 
+display (x:xs) = (\(a,b) -> (a++"::"++(stripQuotes b))) x : display xs 
 
 stripQuotes s = [x | x <- s, x /= '"']
